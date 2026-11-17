@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#2b160d" />
+    <meta name="description" content="UNHEARD iPhone 17 Pro 3D 开箱转场交互 Demo" />
+    <title>UNHEARD · 3D 开箱转场</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="phone-shell" aria-label="UNHEARD 三维开箱交互演示">
+      <section id="experience" class="experience" tabindex="0" aria-describedby="instruction">
+        <canvas id="scene" aria-label="可拖动的三维开箱场景"></canvas>
+        <div class="film-grain" aria-hidden="true"></div>
+        <div id="whip" class="whip" aria-hidden="true"></div>
+        <div id="flash" class="flash" aria-hidden="true"></div>
+
+        <header class="topbar">
+          <div class="eyebrow"><span>UNHEARD</span><span class="dot">●</span><span>INTERACTIVE PROTOTYPE</span></div>
+          <button id="referenceButton" class="icon-button" type="button" aria-label="查看三帧视觉参考">参考帧</button>
+        </header>
+
+        <div class="stage-caption" aria-live="polite">
+          <span id="stepNumber">01</span>
+          <span id="stepLabel">滑动开箱</span>
+        </div>
+
+        <div id="finalCopy" class="final-copy" aria-hidden="true">
+          <p>记录音乐与热爱</p>
+          <h1>从来都不止于声音</h1>
+        </div>
+
+        <div id="finalStats" class="final-stats" aria-hidden="true">数据统计截至2026年12月21日</div>
+
+        <footer class="controls">
+          <div id="instruction" class="instruction">
+            <span id="instructionText">按住纸箱向右滑</span>
+            <span class="drag-arrow" aria-hidden="true">→</span>
+          </div>
+          <div class="scrubber" aria-hidden="true">
+            <div id="scrubberFill" class="scrubber-fill"></div>
+            <i class="marker m1"></i><i class="marker m2"></i><i class="marker m3"></i>
+          </div>
+          <button id="replayButton" class="replay-button" type="button">再看一次 <span>↻</span></button>
+          <div class="spec">iPHONE 17 PRO · 1206 × 2622</div>
+        </footer>
+
+        <dialog id="referenceDialog" class="reference-dialog">
+          <div class="dialog-head">
+            <div><small>STORYBOARD</small><strong>三帧视觉参考</strong></div>
+            <button id="closeReference" class="close-button" type="button" aria-label="关闭参考帧">×</button>
+          </div>
+          <div class="reference-grid">
+            <figure><img src="./assets/reference-01.webp" alt="第一帧：未拆封纸箱顶视图" loading="lazy" /><figcaption>01 · 引导开箱</figcaption></figure>
+            <figure><img src="./assets/reference-02.webp" alt="第二帧：封条撕开过程" loading="lazy" /><figcaption>02 · 撕开封条</figcaption></figure>
+            <figure><img src="./assets/reference-03.webp" alt="第三帧：侧视角纸箱与蹦出的物品" loading="lazy" /><figcaption>03 · 侧视爆发</figcaption></figure>
+          </div>
+        </dialog>
+
+        <div id="loading" class="loading" role="status"><i></i><span>正在搭建场景</span></div>
+      </section>
+    </main>
+    <script>
+      window.__unheardBoot = 'inline-ready';
+      document.documentElement.dataset.inlineScript = 'ready';
+      window.addEventListener('error', (event) => {
+        const status = document.querySelector('#loading span');
+        if (status) status.textContent = `加载失败：${event.message || '未知错误'}`;
+        console.error('[scene error]', event.message, event.filename, event.lineno);
+      });
+      window.addEventListener('unhandledrejection', (event) => {
+        const status = document.querySelector('#loading span');
+        if (status) status.textContent = `加载失败：${event.reason?.message || event.reason || '未知错误'}`;
+        console.error('[scene rejection]', event.reason);
+      });
+    </script>
+    <script src="./vendor/gsap.min.js" onload="document.documentElement.dataset.gsap='loaded'" onerror="document.documentElement.dataset.gsap='error'"></script>
+    <script type="module" src="./app.js" onload="document.documentElement.dataset.app='loaded'" onerror="document.documentElement.dataset.app='error'"></script>
+  </body>
+</html>
+
